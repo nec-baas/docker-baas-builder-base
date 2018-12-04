@@ -73,4 +73,3 @@ ADD rabbitmq/rabbitmq.sh /opt/
 
 # change permission
 RUN chmod 755 /opt/*.sh
-RUN chmod 755 /opt/*.py
