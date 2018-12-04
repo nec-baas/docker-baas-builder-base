@@ -50,3 +50,27 @@ RUN cd /opt \
 ENV JAVA8_HOME /usr/lib/jvm/java-1.8.0
 ENV JAVA_HOME /opt/jdk
 ENV PATH ${JAVA_HOME}/bin:${PATH}
+
+# set home dir (for jenkins user)
+ENV HOME /home
+RUN chmod ugo+rwx ${HOME}
+
+# change permissions
+RUN /bin/rm -rf /var/yum/cache/* \
+    && chmod -v -R ugo+rwx /var/run /var/log /var/lib/mongo /var/lib/rabbitmq /etc/rabbitmq
+
+# add mongo cofig/scripts
+ADD mongo/mongod.conf /etc/
+ADD mongo/mongod.sh /opt/
+
+# add fluentd config/scripts
+ADD fluentd/td-agent.conf /etc/td-agent/
+ADD fluentd/td-agent.sh /opt/
+
+# add rabbitmq config/scripts
+ADD rabbitmq/rabbitmq.config /etc/rabbitmq/
+ADD rabbitmq/rabbitmq.sh /opt/
+
+# change permission
+RUN chmod 755 /opt/*.sh
+RUN chmod 755 /opt/*.py
