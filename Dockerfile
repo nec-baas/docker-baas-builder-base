@@ -1,14 +1,6 @@
 FROM centos:7
 
-RUN echo "include_only=.jp" >> /etc/yum/pluginconf.d/fastestmirror.conf
-
-# create locale
-RUN localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
-
-# set default timezone
-ENV TZ Asia/Tokyo
-ENV LANG ja_JP.UTF-8
-ENV LC_ALL ja_JP.UTF-8
+#RUN echo "include_only=.jp" >> /etc/yum/pluginconf.d/fastestmirror.conf
 
 # install maven
 RUN curl -SLO http://ftp.riken.jp/net/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz \
@@ -50,6 +42,14 @@ RUN cd /opt \
 ENV JAVA8_HOME /usr/lib/jvm/java-1.8.0
 ENV JAVA_HOME /opt/jdk
 ENV PATH ${JAVA_HOME}/bin:${PATH}
+
+# create locale
+RUN localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 && locale -a
+
+# set default timezone / locale
+ENV TZ Asia/Tokyo
+ENV LANG ja_JP.UTF-8
+ENV LC_ALL ja_JP.UTF-8
 
 # set home dir (for jenkins user)
 ENV HOME /home
