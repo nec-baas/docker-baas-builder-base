@@ -22,9 +22,7 @@ RUN yum install -y wget java-1.8.0-openjdk-devel \
     && yum clean all
 
 # Install MongoDB, rabbitmq, fluentd
-ADD mongo/mongodb-org-4.0.repo /etc/yum.repos.d/
-ADD rabbitmq/rabbitmq_erlang.repo /etc/yum.repos.d/
-ADD fluentd/td.repo /etc/yum.repos.d/
+ADD *.repo /etc/yum.repos.d/
 
 RUN cd /opt \
     && wget --no-check-certificate https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.9/rabbitmq-server-3.7.9-1.el7.noarch.rpm \
