@@ -10,3 +10,6 @@ push:
 
 pull:
 	docker pull $(NAME)
+
+bash:
+	docker container run -it --rm $(NAME) /bin/bash
