@@ -2,24 +2,35 @@ FROM centos:7
 
 #RUN echo "include_only=.jp" >> /etc/yum/pluginconf.d/fastestmirror.conf
 
+# Install yum *.repo files
+ADD *.repo /etc/yum.repos.d/
+
+# Install some tools
+RUN yum install -y epel-release \
+    && yum install -y gcc wget aria2 \
+    && yum clean all
+
 # install maven
-RUN curl -SLO http://ftp.riken.jp/net/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz \
+RUN aria2c --check-certificate=false -x5 http://ftp.riken.jp/net/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz \
     && mkdir -p /usr/share/maven \
     && tar xzf apache-maven-*.tar.gz -C /usr/share/maven --strip-components=1 \
     && rm apache-maven-*.tar.gz \
     && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
 # Install OpenJDK, etc.
-RUN yum install -y wget java-1.8.0-openjdk-devel java-11-openjdk-devel \
+RUN yum install -y java-1.8.0-openjdk-devel java-11-openjdk-devel \
     && yum clean all
 
-# Install MongoDB, rabbitmq, fluentd
-ADD *.repo /etc/yum.repos.d/
-
+# Install RabbitMQ
 RUN cd /opt \
-    && wget --no-check-certificate https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.9/rabbitmq-server-3.7.9-1.el7.noarch.rpm \
-    && yum install -y mongodb-org rabbitmq-server*.rpm td-agent gcc \
+    && aria2c --check-certificate=false -x5 https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.9/rabbitmq-server-3.7.9-1.el7.noarch.rpm \
+    && yum install -y rabbitmq-server*.rpm \
     && /bin/rm rabbitmq-server*.rpm \
+    && yum clean all
+
+# Install MongoDB,fluentd
+
+RUN yum install -y mongodb-org td-agent \
     && yum clean all
 
 # Install fluentd mongodb plugin
