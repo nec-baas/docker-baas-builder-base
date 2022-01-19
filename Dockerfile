@@ -60,6 +60,7 @@ RUN chmod ugo+rwx ${HOME}
 
 # change permissions
 RUN /bin/rm -rf /var/yum/cache/* \
+    && mkdir /var/run/td-agent \
     && chmod -v -R ugo+rwx /var/run /var/log /var/lib/mongo /var/lib/rabbitmq /etc/rabbitmq
 
 # add mongo cofig/scripts
