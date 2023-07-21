@@ -37,7 +37,7 @@ RUN yum install -y mongodb-org td-agent \
 RUN /usr/sbin/td-agent-gem install fluent-plugin-mongo
 
 # install Node.js
-RUN curl -sL https://rpm.nodesource.com/setup_8.x | bash - \
+RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash - \
     && yum install -y nodejs \
     && yum clean all
 
