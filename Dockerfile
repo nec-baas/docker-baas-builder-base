@@ -7,7 +7,7 @@ ADD *.repo /etc/yum.repos.d/
 
 # Install some tools
 RUN yum install -y epel-release \
-    && yum install -y gcc wget aria2 \
+    && yum install -y gcc wget aria2 glibc-langpack-ja \
     && yum clean all
 
 # install maven
@@ -48,12 +48,12 @@ ENV JAVA17_HOME /usr/lib/jvm/java-11
 ENV JAVA_HOME ${JAVA17_HOME}
 
 # create locale
-RUN localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 && locale -a
+#RUN localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 && locale -a
 
 # set default timezone / locale
 ENV TZ Asia/Tokyo
-ENV LANG ja_JP.UTF-8
-ENV LC_ALL ja_JP.UTF-8
+ENV LANG ja_JP.utf8
+ENV LC_ALL ja_JP.utf8
 
 # set home dir (for jenkins user)
 ENV HOME /home
