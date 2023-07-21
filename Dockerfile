@@ -11,7 +11,7 @@ RUN yum install -y epel-release \
     && yum clean all
 
 # install maven
-RUN aria2c --check-certificate=false -x5 http://ftp.riken.jp/net/apache/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.tar.gz \
+RUN aria2c --check-certificate=false -x5 http://ftp.riken.jp/net/apache/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz \
     && mkdir -p /usr/share/maven \
     && tar xzf apache-maven-*.tar.gz -C /usr/share/maven --strip-components=1 \
     && rm apache-maven-*.tar.gz \
