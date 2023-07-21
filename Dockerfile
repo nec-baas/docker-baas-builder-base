@@ -44,7 +44,7 @@ RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash - \
 # Default to use OpenJDK 17
 ENV JAVA8_HOME /usr/lib/jvm/java-1.8.0
 ENV JAVA11_HOME /usr/lib/jvm/java-11
-ENV JAVA17_HOME /usr/lib/jvm/java-11
+ENV JAVA17_HOME /usr/lib/jvm/java-17
 ENV JAVA_HOME ${JAVA17_HOME}
 
 # create locale
