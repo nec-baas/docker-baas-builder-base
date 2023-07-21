@@ -1,4 +1,4 @@
-FROM centos:7
+FROM almalinux:8
 
 #RUN echo "include_only=.jp" >> /etc/yum/pluginconf.d/fastestmirror.conf
 
@@ -18,7 +18,7 @@ RUN aria2c --check-certificate=false -x5 http://ftp.riken.jp/net/apache/maven/ma
     && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
 # Install OpenJDK, etc.
-RUN yum install -y java-1.8.0-openjdk-devel java-11-openjdk-devel \
+RUN yum install -y java-1.8.0-openjdk-devel java-11-openjdk-devel java-17-openjdk-devel \
     && yum clean all
 
 # Install RabbitMQ
@@ -41,10 +41,11 @@ RUN curl -sL https://rpm.nodesource.com/setup_8.x | bash - \
     && yum install -y nodejs \
     && yum clean all
 
-# Default to use OpenJDK 11
+# Default to use OpenJDK 17
 ENV JAVA8_HOME /usr/lib/jvm/java-1.8.0
 ENV JAVA11_HOME /usr/lib/jvm/java-11
-ENV JAVA_HOME ${JAVA11_HOME}
+ENV JAVA17_HOME /usr/lib/jvm/java-11
+ENV JAVA_HOME ${JAVA17_HOME}
 
 # create locale
 RUN localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 && locale -a
